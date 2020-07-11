@@ -112,3 +112,42 @@ for epoch in range(num_epochs):
     if epoch%100==0:
         print("Epoch: %d, Loss: %1.5f" % (epoch,loss.item()))
 
+'''
+    # gradient descent
+    weights = [0] * n
+    alpha = 0.0001
+    max_Iter = 50000
+    for i in range(max_Iter):
+        loss = 0
+        d_weights = [0] * n
+        for k in range(m):
+            h = dot(input[k], weights)
+            d_weights = [d_weights[j] + (label[k] - h) * input[k][j] for j in range(n)] 
+            loss += (label[k] - h) * (label[k] - h) / 2
+        d_weights = [d_weights[k]/m for k in range(n)]
+        weights = [weights[k] + alpha * d_weights[k] for k in range(n)]
+        if i%10000 == 0:
+            print "Iteration %d loss: %f"%(i, loss/m)
+            print weights
+
+发现它们实际上是一一对应的：
+
+optimizer.zero_grad()对应d_weights = [0] * n
+
+即将梯度初始化为零（因为一个batch的loss关于weight的导数是所有sample的loss关于weight的导数的累加和）
+
+outputs = net(inputs)对应h = dot(input[k], weights)
+
+即前向传播求出预测的值
+
+loss = criterion(outputs, labels)对应loss += (label[k] - h) * (label[k] - h) / 2
+
+这一步很明显，就是求loss（其实我觉得这一步不用也可以，反向传播时用不到loss值，只是为了让我们知道当前的loss是多少）
+loss.backward()对应d_weights = [d_weights[j] + (label[k] - h) * input[k][j] for j in range(n)]
+
+即反向传播求梯度
+optimizer.step()对应weights = [weights[k] + alpha * d_weights[k] for k in range(n)]
+
+即更新所有参数
+
+'''
