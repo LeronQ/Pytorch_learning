@@ -112,6 +112,26 @@ for epoch in range(num_epochs):
     if epoch%100==0:
         print("Epoch: %d, Loss: %1.5f" % (epoch,loss.item()))
 
+
+#Testing for passengers Dataset
+
+lstm.eval()
+train_predict = lstm(dataX)
+
+
+data_predict = train_predict.data.numpy()
+dataY_plot = dataY.data.numpy()
+
+data_predict = sc.inverse_transform(data_predict)
+dataY_plot = sc.inverse_transform(dataY_plot)
+
+plt.axvline(x=train_size, c='r', linestyle='--')
+
+plt.plot(dataY_plot)
+plt.plot(data_predict)
+plt.suptitle('Time-Series Prediction')
+plt.show()
+
 '''
     # gradient descent
     weights = [0] * n
