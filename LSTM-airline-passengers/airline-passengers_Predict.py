@@ -35,8 +35,8 @@ def sliding_windows(seq,n_steps):
     return np.array(x),np.array(y)
 
 # 数据归一化
-scaler = MinMaxScaler()
-training_data = scaler.fit_transform(training_set)
+sc = MinMaxScaler()
+training_data = sc.fit_transform(training_set)
 
 # 将数据转换为训练数据格式
 n_steps = 4
