@@ -156,6 +156,6 @@ def compute_performance(prediction, target, data):  # 计算模型性能
 
 if __name__ == '__main__':
     main()
-    # visualize_result(h5_file="GAT_result.h5", # 可视化，在下面的 Evaluation()类中
-    # nodes_id = 120, time_se = [0, 24 * 12 * 2],  # 是节点的时间范围
-    # visualize_file = "gat_node_120")
+    visualize_result(h5_file="GAT_result.h5", # 可视化，在下面的 Evaluation()类中
+    nodes_id = 120, time_se = [0, 24 * 12 * 2],  # 是节点的时间范围
+    visualize_file = "gat_node_120")
