@@ -95,10 +95,6 @@ class LSTM_Predict(nn.Module):
         self.fc = nn.Linear(hidden_size, output_size)
 
     def forward(self, x):
-        h_0 = Variable(torch.randn(self.num_layers, x.size(0),
-                                   self.hidden_size)).to(device)
-        c_0 = Variable(torch.randn(self.num_layers, x.size(0),
-                                   self.hidden_size)).to(device)
         # h_0 = Variable(torch.zeros(self.num_layers,x.size(0),
         #                            self.hidden_size)).to(device)
         # c_0 = Variable(torch.zeros(self.num_layers,x.size(0),
