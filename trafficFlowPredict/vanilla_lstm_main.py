@@ -14,6 +14,7 @@ from sklearn.preprocessing import MinMaxScaler
 import sklearn.metrics as metrics
 import matplotlib as mpl
 import math
+import torch.nn.init as init
 
 from utils.plot_res import plot_results
 from utils.eval_res import eva_regress
@@ -98,6 +99,16 @@ class LSTM_Predict(nn.Module):
                                    self.hidden_size)).to(device)
         c_0 = Variable(torch.randn(self.num_layers, x.size(0),
                                    self.hidden_size)).to(device)
+        # h_0 = Variable(torch.zeros(self.num_layers,x.size(0),
+        #                            self.hidden_size)).to(device)
+        # c_0 = Variable(torch.zeros(self.num_layers,x.size(0),
+        #                            self.hidden_size)).to(device)
+
+        h_0 = nn.Parameter(torch.Tensor(self.num_layers,x.size(0),self.hidden_size)).to(device)
+        c_0 = nn.Parameter(torch.Tensor(self.num_layers,x.size(0),self.hidden_size)).to(device)
+        init.xavier_normal_(h_0)
+        init.xavier_normal_(c_0)
+
 
         output, (h_out, _) = self.lstm(x, (h_0, c_0))
         h_out = h_out.view(-1, self.hidden_size)
